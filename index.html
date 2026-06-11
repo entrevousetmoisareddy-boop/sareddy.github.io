@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sar Eddy Safari | Portfolio</title>
+    <style>
+        body { margin: 0; font-family: 'Helvetica Neue', sans-serif; background: #000; color: #fff; display: flex; }
+        
+        /* Menu latéral */
+        nav { width: 250px; height: 100vh; position: fixed; background: #111; padding: 40px 20px; border-right: 1px solid #333; }
+        nav h2 { color: #7a5dfa; font-size: 1.2em; margin-bottom: 30px; }
+        nav a { display: block; color: #fff; text-decoration: none; margin-bottom: 15px; text-transform: uppercase; font-size: 0.9em; }
+        nav a:hover { color: #7a5dfa; }
+
+        /* Contenu principal */
+        main { margin-left: 290px; padding: 40px; max-width: 800px; }
+        h1 { font-size: 2.5em; color: #7a5dfa; }
+        p { color: #ccc; line-height: 1.6; }
+        
+        /* Galerie */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; margin-top: 40px; }
+        .item img { width: 100%; height: 250px; object-fit: cover; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <h2>Sar Eddy Safari</h2>
+    <a href="#bio">Biographie</a>
+    <a href="#demarche">Démarche</a>
+    <a href="#galerie">Galerie</a>
+</nav>
+
+<main>
+    <h1>Portfolio</h1>
+
+    <section id="bio">
+        <h2>Biographie</h2>
+        <p>Artiste slameur, rappeur et artiviste originaire de Bukavu, Sar Eddy Safari est une voix engagée. Chercheur en Master 1 de Droit, il lie la rigueur juridique à la puissance poétique pour transformer le verbe en outil de résilience.</p>
+    </section>
+
+    <section id="demarche">
+        <h2>Démarche Artistique</h2>
+        <p>Sa démarche est celle d'un "artiviste" : faire de l'art un levier de sensibilisation aux droits humains. Par la fusion du slam et du rap, il crée des ponts entre le cri et la lumière, intervenant tant sur la scène internationale qu'auprès des jeunes à la Bibliothèque de Paix de Panzi.</p>
+    </section>
+
+    <section id="galerie">
+        <h2>Galerie</h2>
+        <div class="gallery">
+            <div class="item"><img src="1BF0E033-14EC-499D-BEEC-86899A51E244.jpeg" alt="Photo"></div>
+            <div class="item"><img src="IMG_3716.jpeg" alt="Photo"></div>
+            </div>
+    </section>
+</main>
+
+</body>
+</html>
