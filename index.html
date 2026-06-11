@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sar eddy safari | portfolio officiel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060606;
+            --text: #ffffff;
+            --accent: #7a5dfa;
+            --gray: #121212;
+            --text-muted: #a0a0a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            text-transform: lowercase;
+        }
+
+        /* menu à gauche */
+        .menu-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 2000;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .menu-btn div {
+            width: 22px;
+            height: 2px;
+            background-color: var(--text);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 1500;
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .nav-overlay.active { left: 0; }
+        .nav-overlay a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem; color: var(--text);
+            text-decoration: none; margin: 20px 0;
+            display: block;
+            transition: 0.3s;
+        }
+        .nav-overlay a:hover { color: var(--accent); font-style: italic; }
+
+        /* en-tête / couverture */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 0 10%;
+            position: relative;
+            border-bottom: 1px solid var(--gray);
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-content { max-width: 700px; z-index: 2; }
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400; line-height: 1.1; margin-bottom: 20px; }
+        .subtitle { font-size: 1.1rem; color: var(--accent); letter-spacing: 3px; margin-bottom: 15px; display: block; }
+        .intro-text { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; }
+
+        /* structure du portfolio immersif */
+        .portfolio-container { padding: 40px 0; }
+        
+        .portfolio-item {
+            padding: 100px 10%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .portfolio-item:nth-child(even) { direction: rtl; }
+        .portfolio-item:nth-child(even) .text-box { direction: ltr; }
+
+        .image-box { width: 100%; position: relative; overflow: hidden; background: var(--gray); border-radius: 2px; }
+        .image-box img { width: 100%; height: auto; display: block; transition: transform 0.6s ease; }
+        .image-box:hover img { transform: scale(1.02); }
+
+        .text-box h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.2rem; font-weight: 400; 
+            margin-bottom: 25px; color: #ffffff;
+            line-height: 1.3;
+        }
+        .text-box p { color: #cccccc; font-size: 1.05rem; text-align: justify; }
+        .immersion-tag { 
+            font-size: 0.8rem; letter-spacing: 2px; color: var(--accent); 
+            margin-bottom: 12px; display: block; font-weight: 500;
+        }
+
+        /* sections de grilles pour les séries de photos (idurhu, kigali, portraits) */
+        .portfolio-grid-section {
+            padding: 100px 10%;
+            border-bottom: 1px solid var(--gray);
+        }
+        .portfolio-grid-section h2 {
+            font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 400; margin-bottom: 15px;
+        }
+        .grid-desc { color: var(--text-muted); margin-bottom: 40px; max-width: 600px; }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .grid-item { background: var(--gray); overflow: hidden; position: relative; }
+        .grid-item img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+        .grid-item:hover img { transform: scale(1.03); }
+
+        /* contact & footer */
+        .contact-section { padding: 120px 10%; text-align: left; max-width: 800px; }
+        .contact-section h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 400; margin-bottom: 20px; }
+        .contact-link { color: var(--text); font-size: 1.5rem; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 5px; display: inline-block; margin-top: 15px; }
+
+        footer { padding: 60px 10%; border-top: 1px solid var(--gray); color: #444; font-size: 0.85rem; }
+
+        /* responsive mobile */
+        @media (max-width: 960px) {
+            .portfolio-item { grid-template-columns: 1fr; padding: 60px 6%; gap: 35px; }
+            .portfolio-item:nth-child(even) { direction: ltr; }
+            .portfolio-grid-section { padding: 60px 6%; }
+            h1 { font-size: 3.2rem; }
+            .menu-btn { top: 20px; left: 20px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="menu-btn" onclick="toggleMenu()">
+        <div></div><div></div>
+    </button>
+
+    <div class="nav-overlay" id="menu">
+        <nav style="text-align: center;">
+            <a href="#" onclick="toggleMenu()">accueil</a>
+            <a href="#portfolio" onclick="toggleMenu()">portfolio</a>
+            <a href="#contact" onclick="toggleMenu()">contact</a>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="subtitle">artiste de la parole</span>
+            <h1>sar eddy safari</h1>
+            <p class="intro-text">portfolio immersif. espace de récits, de scènes et de transmission par le verbe.</p>
+        </div>
+        <div style="position: absolute; top:0; left:0; width:100%; height:100%; opacity: 0.15; z-index: 1;">
+            <img src="IMG_3720.jpeg" style="width:100%; height:100%; object-fit:cover;" alt="couverture">
+        </div>
+    </section>
+
+    <div id="portfolio" class="portfolio-container">
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3721.jpeg" alt="francophonie 2023"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 01 / célébration</span>
+                <h2>journée internationale de la francophonie 2023</h2>
+                <p>porteur d'une parole sans frontières, ce moment capture le partage de la langue et du rythme à l'occasion de la célébration annuelle de la francophonie. une immersion totale dans l'échange et la force du mot partagé.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3723.jpeg" alt="concert muhumba"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 02 / acoustique</span>
+                <h2>concert acoustique à muhumba</h2>
+                <p>une atmosphère intimiste où la voix se met à nu. ce concert à muhumba a permis une proximité vibrante avec le public, alliant la pureté des silences à la résonance des rimes dans un cadre épuré.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3725.jpeg" alt="balle perdue mashujaa"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 03 / scène</span>
+                <h2>spectacle "balle perdue" au mashujaa art center</h2>
+                <p>novembre 2022. une performance marquante où le geste rencontre la poésie sociale. "balle perdue" interroge, bouscule et plonge l'auditoire au cœur des réalités contemporaines à travers une scénographie intense.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3726.jpeg" alt="soirée café slam panzi"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 04 / communauté</span>
+                <h2>prestation dans la soirée café slam panzi</h2>
+                <p>au cœur des initiatives locales, les soirées café slam représentent le poumon de la parole libre. ce moment témoigne de l'immersion au sein des communautés pour faire résonner la poésie là où elle guérit.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3727.jpeg" alt="muziki na kahawa goma"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 05 / trajectoire</span>
+                <h2>prestation muziki na kahawa à goma</h2>
+                <p>novembre 2023. rencontre sur la rive du lac, mêlant les notes de café à la musique des mots. une performance immersive qui tisse des liens artistiques durables entre bukavu et goma.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-grid-section">
+            <span class="immersion-tag">immersion 06 / festival</span>
+            <h2>festival idurhu</h2>
+            <p class="grid-desc">immersion collective à travers une série de clichés capturant l'énergie scénique, les coulisses et l'ancrage culturel au cours du festival idurhu.</p>
+            <div class="photo-grid">
+                <div class="grid-item"><img src="IMG_3720.jpeg" alt="festival idurhu 1"></div>
+                <div class="grid-item"><img src="IMG_3723.jpeg" alt="festival idurhu 2"></div>
+                <div class="grid-item"><img src="IMG_3731.jpeg" alt="festival idurhu 3"></div>
+            </div>
+        </section>
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3719.jpeg" alt="izulu live festival"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 07 / grand format</span>
+                <h2>izulu live festival</h2>
+                <p>décembre 2024. une scène majeure sous le signe de l'unité artistique. cette prestation retrace la puissance brute du verbe devant un public en parfaite symbiose avec les thématiques de résilience abordées.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-grid-section">
+            <span class="immersion-tag">immersion 08 / engagement</span>
+            <h2>célébration de la résilience à la bibliothèque de paix de panzi</h2>
+            <p class="grid-desc">l'écriture thérapeutique au cœur de la transmission. ateliers et moments de partage avec la jeunesse pour transformer les douleurs en espaces d'avenir et de création.</p>
+            <div class="photo-grid">
+                <div class="grid-item"><img src="1EE2B740-DC8B-4FFC-B0D3-76718C665A5F.jpeg" alt="bibliothèque panzi 1"></div>
+                <div class="grid-item"><img src="IMG_3730.jpeg" alt="bibliothèque panzi 2"></div>
+                <div class="grid-item"><img src="IMG_3718.jpeg" alt="bibliothèque panzi 3"></div>
+                <div class="grid-item"><img src="IMG_3717.jpeg" alt="bibliothèque panzi 4"></div>
+            </div>
+        </section>
+
+        <section class="portfolio-item">
+            <div class="image-box"><img src="IMG_3716.jpeg" alt="artviv lausanne duplex"></div>
+            <div class="text-box">
+                <span class="immersion-tag">immersion 09 / international</span>
+                <h2>prestation en duplex : projet ecopoètes artviv, lausanne</h2>
+                <p>une collaboration transfrontalière majeure. par le biais du numérique, la parole brise les barrières géographiques pour lier bukavu à lausanne dans une immersion poétique dédiée à l'environnement et à la conscience écologique.</p>
+            </div>
+        </section>
+
+        <section class="portfolio-grid-section">
+            <span class="immersion-tag">immersion 10 / masterclasses</span>
+            <h2>kigali : journée de la francophonie &amp; masterclasses</h2>
+            <p class="grid-desc">immersion pédagogique et artistique au rwanda. sessions intensives de travail, masterclasses et perfectionnement du verbe aux côtés du mentor marc alexandre oho bambe.</p>
+            <div class="photo-grid">
+                <div class="grid-item"><img src="1BF0E033-14EC-499D-BEEC-86899A51E244.jpeg" alt="kigali 1"></div>
+                <div class="grid-item"><img src="F0E4EB48-03E5-4B4A-A8F2-66A98C33CDFF.jpeg" alt="kigali 2"></div>
+                <div class="grid-item"><img src="440864a5-cb75-4826-9345-9cdde5fea548.jpeg" alt="kigali 3"></div>
+                <div class="grid-item"><img src="819a450c-0a10-4edd-b52b-44aaaa88d5da.jpeg" alt="kigali 4"></div>
+                <div class="grid-item"><img src="62a73a68-9579-4420-b5da-fe8c1e126f7d.jpeg" alt="kigali 5"></div>
+                <div class="grid-item"><img src="df9b3964-a9e6-4006-927f-f3b0a3068110.jpeg" alt="kigali 6"></div>
+                <div class="grid-item"><img src="7162ee37-c4da-414f-ab75-bbaf0cafa052.jpeg" alt="kigali 7"></div>
+            </div>
+        </section>
+
+        <section class="portfolio-grid-section">
+            <span class="immersion-tag">immersion 11 / identité</span>
+            <h2>portraits de l'artiste</h2>
+            <p class="grid-desc">regards croisés, expressions et présence. une série de captures qui définissent l'identité visuelle de sar eddy safari, entre concentration et jaillissement de la parole.</p>
+            <div class="photo-grid">
+                <div class="grid-item"><img src="5cb75049-1fbe-4f1d-abbe-9e40b45d4b2a.jpeg" alt="portrait 1"></div>
+                <div class="grid-item"><img src="29de0fd5-1a28-4df5-9268-436cf8e0800e.jpeg" alt="portrait 2"></div>
+                <div class="grid-item"><img src="IMG_3781.jpeg" alt="portrait 3"></div>
+                <div class="grid-item"><img src="d7dfa6bc-ec05-4c10-abad-1fe2e1038ad4.jpeg" alt="portrait 4"></div>
+                <div class="grid-item"><img src="IMG_4583.jpeg" alt="portrait 5"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <section id="contact" class="contact-section">
+        <h2>me contacter</h2>
+        <p>pour les collaborations, projets, scènes et ateliers d'écriture thérapeutique :</p>
+        <a href="mailto:entrevousetmoisareddysafari@gmail.com" class="contact-link">entrevousetmoisareddysafari@gmail.com</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 sar eddy safari. tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+
+        // script de sécurité pour corriger dynamiquement les noms de fichiers coupés par github mobile (...)
+        window.onload = function() {
+            document.querySelectorAll('img').forEach(img => {
+                img.onerror = function() {
+                    let currentSrc = this.getAttribute('src');
+                    if(currentSrc && !currentSrc.includes('...') && currentSrc.length > 25) {
+                        // si le chargement échoue à cause du nom complet, on bascule sur la version tronquée par github
+                        this.src = currentSrc.substring(0, 30) + '...jpeg';
+                    }
+                };
+            });
+        }
+    </script>
+</body>
+</html>
